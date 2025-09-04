@@ -1,11 +1,10 @@
- 
 import type { Config } from 'drizzle-kit';
 
 export default {
   schema: './drizzle/schema.ts',
   out: './drizzle/migrations',
-  driver: 'better-sqlite3',
+  driver: 'libsql',
   dbCredentials: {
-    url: './local.db',
+    url: 'file:local.db',
   },
 } satisfies Config;
