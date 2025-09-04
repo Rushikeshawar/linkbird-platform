@@ -1,5 +1,3 @@
- 
-// src/components/auth/register-form.tsx
 "use client";
 
 import { useState } from "react";
@@ -46,6 +44,8 @@ export function RegisterForm() {
         }),
       });
 
+      const data = await response.json();
+      
       if (response.ok) {
         toast({
           title: "Success",
@@ -53,9 +53,10 @@ export function RegisterForm() {
         });
         router.push("/login");
       } else {
-        throw new Error("Registration failed");
+        throw new Error(data.message || "Registration failed");
       }
     } catch (error) {
+      console.error("Registration error:", error);
       toast({
         title: "Error",
         description: "Failed to create account. Please try again.",
