@@ -1,13 +1,11 @@
- 
-// src/components/leads/lead-detail-sheet.tsx
 "use client";
 
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -24,11 +22,11 @@ export function LeadDetailSheet({ lead, open, onOpenChange }: LeadDetailSheetPro
   if (!lead) return null;
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-96 p-0">
-        <SheetHeader className="p-6 pb-4">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-md p-0">
+        <DialogHeader className="p-6 pb-4">
           <div className="flex items-center justify-between">
-            <SheetTitle>Lead Profile</SheetTitle>
+            <DialogTitle>Lead Profile</DialogTitle>
             <Button
               variant="ghost"
               size="sm"
@@ -37,10 +35,10 @@ export function LeadDetailSheet({ lead, open, onOpenChange }: LeadDetailSheetPro
               <X className="w-4 h-4" />
             </Button>
           </div>
-        </SheetHeader>
+        </DialogHeader>
 
         <div className="px-6 space-y-6">
-          {/* Lead Header */}
+          {/* Rest of your component stays the same */}
           <div className="flex items-center gap-4">
             <Avatar className="w-16 h-16">
               <AvatarImage src={lead.avatar} />
@@ -62,19 +60,6 @@ export function LeadDetailSheet({ lead, open, onOpenChange }: LeadDetailSheetPro
 
           <Separator />
 
-          {/* Additional Profile Info */}
-          <div>
-            <Button
-              variant="ghost"
-              className="w-full justify-between p-0 h-auto"
-            >
-              <span className="font-medium">Additional Profile Info</span>
-              <ChevronDown className="w-4 h-4" />
-            </Button>
-          </div>
-
-          <Separator />
-
           {/* Activity Timeline */}
           <div className="space-y-4">
             <div className="flex items-start gap-3">
@@ -87,16 +72,6 @@ export function LeadDetailSheet({ lead, open, onOpenChange }: LeadDetailSheetPro
                   Message: Hi Om, I'm building consultative AI...{" "}
                   <button className="text-blue-600 hover:underline">See More</button>
                 </div>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mt-1">
-                <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-              </div>
-              <div className="flex-1">
-                <div className="font-medium">Connection Status</div>
-                <div className="text-sm text-gray-600">Check connection status</div>
               </div>
             </div>
 
@@ -126,7 +101,7 @@ export function LeadDetailSheet({ lead, open, onOpenChange }: LeadDetailSheetPro
             </Button>
           </div>
         </div>
-      </SheetContent>
-    </Sheet>
+      </DialogContent>
+    </Dialog>
   );
 }

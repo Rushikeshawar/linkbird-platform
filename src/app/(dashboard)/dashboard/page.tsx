@@ -1,31 +1,3 @@
- 
-// src/app/(dashboard)/dashboard/page.tsx
-import { CampaignsList } from "@/components/dashboard/campaigns-list";
-import { RecentActivity } from "@/components/dashboard/recent-activity";
-import { LinkedInAccounts } from "@/components/dashboard/linkedin-accounts";
-
-export default function DashboardPage() {
-  return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Campaigns */}
-        <div className="lg:col-span-1">
-          <CampaignsList />
-        </div>
-        
-        {/* Recent Activity */}
-        <div className="lg:col-span-2">
-          <RecentActivity />
-        </div>
-      </div>
-      
-      {/* LinkedIn Accounts */}
-      <LinkedInAccounts />
-    </div>
-  );
-}
-
-// src/components/dashboard/campaigns-list.tsx
 "use client";
 
 import { Badge } from "@/components/ui/badge";

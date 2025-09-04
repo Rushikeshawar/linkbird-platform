@@ -1,5 +1,5 @@
- 
-// src/app/api/auth/[...betterauth]/route.ts
 import { auth } from "@/lib/auth";
 
-export const { GET, POST } = auth.handler;
+const handler = auth.handler;
+
+export { handler as GET, handler as POST };
