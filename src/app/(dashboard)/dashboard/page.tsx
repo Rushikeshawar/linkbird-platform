@@ -1,77 +1,50 @@
-// src/app/(dashboard)/dashboard/page.tsx
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Target, MessageSquare, TrendingUp } from "lucide-react";
-import { RecentActivity } from "@/components/dashboard/recent-activity";
-import { CampaignsList } from "@/components/dashboard/campaigns-list";
-import { LinkedInAccounts } from "@/components/dashboard/linkedin-accounts";
+"use client";
 
-export default function DashboardPage() {
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+const campaigns = [
+  { id: 1, name: "Just Herbs", status: "Active" },
+  { id: 2, name: "Juicy chemistry", status: "Active" },
+  { id: 3, name: "Hyugalife 2", status: "Active" },
+  { id: 4, name: "Honeyveda", status: "Active" },
+  { id: 5, name: "HempStreet", status: "Active" },
+  { id: 6, name: "HealthyHey 2", status: "Active" },
+];
+
+export function CampaignsList() {
   return (
-    <div className="space-y-6">
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Leads</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">1,234</div>
-            <p className="text-xs text-muted-foreground">
-              +12% from last month
-            </p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Campaigns</CardTitle>
-            <Target className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">8</div>
-            <p className="text-xs text-muted-foreground">
-              3 paused campaigns
-            </p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Messages Sent</CardTitle>
-            <MessageSquare className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">456</div>
-            <p className="text-xs text-muted-foreground">
-              +8% from last week
-            </p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Response Rate</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">23.4%</div>
-            <p className="text-xs text-muted-foreground">
-              +2.1% from last month
-            </p>
-          </CardContent>
-        </Card>
+    <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-semibold">Campaigns</h2>
+        <Select defaultValue="all">
+          <SelectTrigger className="w-32">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Campaigns</SelectItem>
+            <SelectItem value="active">Active</SelectItem>
+            <SelectItem value="paused">Paused</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
-
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="space-y-6">
-          <CampaignsList />
-          <LinkedInAccounts />
-        </div>
-        <div>
-          <RecentActivity />
-        </div>
+      
+      <div className="space-y-3">
+        {campaigns.map((campaign) => (
+          <div key={campaign.id} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-md">
+            <span className="font-medium">{campaign.name}</span>
+            <Badge variant="secondary" className="bg-green-100 text-green-800">
+              {campaign.status}
+            </Badge>
+          </div>
+        ))}
       </div>
     </div>
   );
