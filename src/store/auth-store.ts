@@ -1,32 +1,26 @@
- 
-// src/hooks/use-auth.ts
-"use client";
+// src/store/auth-store.ts
+import { create } from 'zustand';
 
-import { useRouter } from "next/navigation";
-import { useToast } from "@/components/ui/use-toast";
-
-export function useAuth() {
-  const router = useRouter();
-  const { toast } = useToast();
-
-  const signOut = async () => {
-    try {
-      await fetch("/api/auth/sign-out", {
-        method: "POST",
-      });
-      router.push("/login");
-      router.refresh();
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to sign out",
-        variant: "destructive",
-      });
-    }
-  };
-
-  return {
-    signOut,
-  };
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  image?: string;
 }
+
+interface AuthStore {
+  user: User | null;
+  isLoading: boolean;
+  setUser: (user: User | null) => void;
+  setLoading: (loading: boolean) => void;
+  logout: () => void;
+}
+
+export const useAuthStore = create<AuthStore>((set) => ({
+  user: null,
+  isLoading: true,
+  setUser: (user) => set({ user, isLoading: false }),
+  setLoading: (isLoading) => set({ isLoading }),
+  logout: () => set({ user: null, isLoading: false }),
+}));
 
