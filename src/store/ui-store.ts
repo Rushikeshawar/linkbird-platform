@@ -1,5 +1,3 @@
- 
-
 // src/store/ui-store.ts
 import { create } from 'zustand';
 

@@ -33,8 +33,8 @@ export function RegisterForm() {
     setIsLoading(true);
 
     try {
-      // Use the proper Better Auth endpoint
-      const response = await fetch("/api/auth/sign-up", {
+      // Use our working registration endpoint
+      const response = await fetch("/api/test-signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

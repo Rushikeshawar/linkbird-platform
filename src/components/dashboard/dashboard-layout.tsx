@@ -1,4 +1,3 @@
- 
 // src/components/dashboard/dashboard-layout.tsx
 "use client";
 
@@ -6,9 +5,16 @@ import { Sidebar } from "./sidebar";
 import { Header } from "./header";
 import { useState } from "react";
 
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  image?: string | null;
+}
+
 interface DashboardLayoutProps {
   children: React.ReactNode;
-  user: any;
+  user: User | null;
 }
 
 export function DashboardLayout({ children, user }: DashboardLayoutProps) {

@@ -1,23 +1,23 @@
-// src/app/api/auth/[...betterauth]/route.ts
+// Alternative src/app/api/auth/[...betterauth]/route.ts
 import { auth } from "@/lib/auth";
+import { NextRequest } from "next/server";
 
-// Better Auth handler for all HTTP methods
-export async function GET(request: Request) {
-  return auth.handler(request);
+export async function GET(req: NextRequest) {
+  return await auth.handler(req);
 }
 
-export async function POST(request: Request) {
-  return auth.handler(request);
+export async function POST(req: NextRequest) {
+  return await auth.handler(req);
 }
 
-export async function PUT(request: Request) {
-  return auth.handler(request);
+export async function PUT(req: NextRequest) {
+  return await auth.handler(req);
 }
 
-export async function DELETE(request: Request) {
-  return auth.handler(request);
+export async function DELETE(req: NextRequest) {
+  return await auth.handler(req);
 }
 
-export async function PATCH(request: Request) {
-  return auth.handler(request);
+export async function PATCH(req: NextRequest) {
+  return await auth.handler(req);
 }

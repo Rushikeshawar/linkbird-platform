@@ -22,8 +22,8 @@ export function LoginForm() {
     setIsLoading(true);
 
     try {
-      // Use the correct Better Auth endpoint
-      const response = await fetch("/api/auth/sign-in/email", {
+      // Use our simple login endpoint
+      const response = await fetch("/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,17 +35,27 @@ export function LoginForm() {
       });
 
       if (response.ok) {
+        toast({
+          title: "Success",
+          description: "Logged in successfully!",
+        });
         router.push("/dashboard");
         router.refresh();
       } else {
         const errorData = await response.text();
         console.error("Login failed:", errorData);
-        throw new Error("Login failed");
+        
+        if (response.status === 401) {
+          throw new Error("Invalid email or password. Please check your credentials.");
+        } else {
+          throw new Error("Login failed. Please try again.");
+        }
       }
     } catch (error) {
+      console.error("Login error:", error);
       toast({
         title: "Error",
-        description: "Invalid email or password",
+        description: error instanceof Error ? error.message : "Invalid email or password",
         variant: "destructive",
       });
     } finally {

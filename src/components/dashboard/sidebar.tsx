@@ -1,4 +1,3 @@
- 
 // src/components/dashboard/sidebar.tsx
 "use client";
 
@@ -39,10 +38,17 @@ const settings = [
   { name: "Setting & Billing", href: "/settings", icon: Settings },
 ];
 
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  image?: string | null;
+}
+
 interface SidebarProps {
   collapsed: boolean;
   onCollapse: (collapsed: boolean) => void;
-  user: any;
+  user: User | null;
 }
 
 export function Sidebar({ collapsed, onCollapse, user }: SidebarProps) {
@@ -51,7 +57,7 @@ export function Sidebar({ collapsed, onCollapse, user }: SidebarProps) {
 
   const handleLogout = async () => {
     try {
-      await fetch("/api/auth/sign-out", {
+      await fetch("/api/logout", {
         method: "POST",
       });
       router.push("/login");
@@ -87,14 +93,14 @@ export function Sidebar({ collapsed, onCollapse, user }: SidebarProps) {
             <Button variant="ghost" className="w-full justify-start p-0 h-auto">
               <div className="flex items-center gap-3">
                 <Avatar className="w-8 h-8">
-                  <AvatarImage src={user?.image} />
+                  <AvatarImage src={user?.image || "/placeholder-avatar.jpg"} />
                   <AvatarFallback className="bg-gray-500 text-white">
-                    {user?.name?.substring(0, 2).toUpperCase() || "PE"}
+                    {user?.name?.substring(0, 2).toUpperCase() || "U"}
                   </AvatarFallback>
                 </Avatar>
                 {!collapsed && (
                   <div className="flex-1 text-left">
-                    <div className="font-medium text-sm">{user?.name || "Kandid"}</div>
+                    <div className="font-medium text-sm">{user?.name || "User"}</div>
                     <div className="text-xs text-gray-500">Personal</div>
                   </div>
                 )}
@@ -217,13 +223,19 @@ export function Sidebar({ collapsed, onCollapse, user }: SidebarProps) {
       <div className="p-4 border-t border-gray-200">
         <div className="flex items-center gap-3">
           <Avatar className="w-8 h-8">
-            <AvatarImage src="/placeholder-avatar.jpg" />
-            <AvatarFallback className="bg-blue-600 text-white">BK</AvatarFallback>
+            <AvatarImage src={user?.image || "/placeholder-avatar.jpg"} />
+            <AvatarFallback className="bg-blue-600 text-white">
+              {user?.name?.substring(0, 2).toUpperCase() || "U"}
+            </AvatarFallback>
           </Avatar>
           {!collapsed && (
             <div className="flex-1">
-              <div className="font-medium text-sm">Bhavya From Kand...</div>
-              <div className="text-xs text-gray-500">bhavya@kandid.ai</div>
+              <div className="font-medium text-sm truncate">
+                {user?.name || "User"}
+              </div>
+              <div className="text-xs text-gray-500 truncate">
+                {user?.email || "user@example.com"}
+              </div>
             </div>
           )}
         </div>
@@ -231,4 +243,3 @@ export function Sidebar({ collapsed, onCollapse, user }: SidebarProps) {
     </div>
   );
 }
-

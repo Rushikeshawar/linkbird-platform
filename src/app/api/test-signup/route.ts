@@ -1,40 +1,21 @@
-// src/app/api/test-signup/route.ts
-import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/lib/auth";
+// src/app/api/setup-db/route.ts
+import { NextResponse } from "next/server";
+import { db } from "@/lib/db";
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
-    const body = await request.json();
-    console.log("Attempting signup with data:", body);
-    
-    // Try to use Better Auth's signUp method directly
-    const result = await auth.api.signUpEmail({
-      body: {
-        name: body.name,
-        email: body.email,
-        password: body.password,
-      },
-      headers: request.headers,
-    });
-    
-    console.log("Signup result:", result);
+    // This will automatically create tables when first accessed
+    // since you're using Drizzle ORM
+    const result = await db.execute('SELECT 1');
     
     return NextResponse.json({ 
       success: true, 
-      user: result 
+      message: "Database initialized successfully" 
     });
   } catch (error) {
-    console.error("Signup error:", error);
     return NextResponse.json({ 
-      error: "Signup failed",
-      details: error instanceof Error ? error.message : String(error)
+      error: "Database setup failed",
+      details: error.message 
     }, { status: 500 });
   }
-}
-
-export async function GET() {
-  return NextResponse.json({ 
-    message: "Test signup endpoint",
-    info: "Use POST with { name, email, password }"
-  });
 }
