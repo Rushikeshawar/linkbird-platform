@@ -33,8 +33,8 @@ export function RegisterForm() {
     setIsLoading(true);
 
     try {
-      // Use the correct Better Auth endpoint
-      const response = await fetch("/api/auth/sign-up", {
+      // Test with our custom endpoint first
+      const response = await fetch("/api/test-signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,6 +46,9 @@ export function RegisterForm() {
         }),
       });
 
+      const data = await response.json();
+      console.log("Response:", data);
+
       if (response.ok) {
         toast({
           title: "Success",
@@ -53,9 +56,7 @@ export function RegisterForm() {
         });
         router.push("/login");
       } else {
-        const errorData = await response.text();
-        console.error("Registration failed:", errorData);
-        throw new Error("Registration failed");
+        throw new Error(data.error || "Registration failed");
       }
     } catch (error) {
       console.error("Registration error:", error);
