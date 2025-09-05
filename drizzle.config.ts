@@ -1,10 +1,11 @@
-import type { Config } from 'drizzle-kit';
+// drizzle.config.ts
+import { defineConfig } from 'drizzle-kit';
 
-export default {
+export default defineConfig({
   schema: './drizzle/schema.ts',
   out: './drizzle/migrations',
-  driver: 'libsql',
+  dialect: 'sqlite',
   dbCredentials: {
     url: 'file:local.db',
   },
-} satisfies Config;
+});

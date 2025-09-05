@@ -22,7 +22,8 @@ export function LoginForm() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/auth/sign-in", {
+      // Use the correct Better Auth endpoint
+      const response = await fetch("/api/auth/sign-in/email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,6 +38,8 @@ export function LoginForm() {
         router.push("/dashboard");
         router.refresh();
       } else {
+        const errorData = await response.text();
+        console.error("Login failed:", errorData);
         throw new Error("Login failed");
       }
     } catch (error) {
@@ -53,11 +56,11 @@ export function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="email">Email or Username</Label>
+        <Label htmlFor="email">Email</Label>
         <Input
           id="email"
           type="email"
-          placeholder="Enter email or username"
+          placeholder="Enter your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -100,7 +103,3 @@ export function LoginForm() {
     </form>
   );
 }
-
-
-
-

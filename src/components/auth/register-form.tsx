@@ -1,3 +1,4 @@
+// src/components/auth/register-form.tsx
 "use client";
 
 import { useState } from "react";
@@ -32,6 +33,7 @@ export function RegisterForm() {
     setIsLoading(true);
 
     try {
+      // Use the correct Better Auth endpoint
       const response = await fetch("/api/auth/sign-up", {
         method: "POST",
         headers: {
@@ -44,8 +46,6 @@ export function RegisterForm() {
         }),
       });
 
-      const data = await response.json();
-      
       if (response.ok) {
         toast({
           title: "Success",
@@ -53,7 +53,9 @@ export function RegisterForm() {
         });
         router.push("/login");
       } else {
-        throw new Error(data.message || "Registration failed");
+        const errorData = await response.text();
+        console.error("Registration failed:", errorData);
+        throw new Error("Registration failed");
       }
     } catch (error) {
       console.error("Registration error:", error);
