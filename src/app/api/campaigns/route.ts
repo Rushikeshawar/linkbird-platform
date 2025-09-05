@@ -1,9 +1,8 @@
- 
 // src/app/api/campaigns/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { campaigns, leads } from "@/../drizzle/schema";
-import { eq, sql, count } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 export async function GET(request: NextRequest) {
   try {
@@ -51,4 +50,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-
