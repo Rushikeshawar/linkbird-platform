@@ -33,8 +33,8 @@ export function RegisterForm() {
     setIsLoading(true);
 
     try {
-      // Test with our custom endpoint first
-      const response = await fetch("/api/test-signup", {
+      // Use the proper Better Auth endpoint
+      const response = await fetch("/api/auth/sign-up", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,9 +46,6 @@ export function RegisterForm() {
         }),
       });
 
-      const data = await response.json();
-      console.log("Response:", data);
-
       if (response.ok) {
         toast({
           title: "Success",
@@ -56,13 +53,21 @@ export function RegisterForm() {
         });
         router.push("/login");
       } else {
-        throw new Error(data.error || "Registration failed");
+        const errorData = await response.text();
+        console.error("Registration failed:", errorData);
+        
+        // Handle specific error cases
+        if (response.status === 422) {
+          throw new Error("Email already exists. Please use a different email or try logging in.");
+        } else {
+          throw new Error("Registration failed. Please try again.");
+        }
       }
     } catch (error) {
       console.error("Registration error:", error);
       toast({
         title: "Error",
-        description: "Failed to create account. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to create account. Please try again.",
         variant: "destructive",
       });
     } finally {

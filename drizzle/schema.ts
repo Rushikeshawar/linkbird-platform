@@ -8,13 +8,13 @@ export const users = sqliteTable('users', {
   id: text('id').primaryKey(),
   name: text('name').notNull(),
   email: text('email').notNull().unique(),
-  emailVerified: integer('emailVerified', { mode: 'boolean' }),
+  emailVerified: integer('emailVerified', { mode: 'boolean' }).default(false),
   image: text('image'),
   createdAt: integer('createdAt', { mode: 'timestamp' }).default(sql`(unixepoch())`),
   updatedAt: integer('updatedAt', { mode: 'timestamp' }).default(sql`(unixepoch())`),
 });
 
-// Sessions table (Better Auth)
+// Sessions table (Better Auth) - Updated for Better Auth compatibility
 export const sessions = sqliteTable('sessions', {
   id: text('id').primaryKey(),
   expiresAt: integer('expiresAt', { mode: 'timestamp' }).notNull(),
@@ -26,7 +26,7 @@ export const sessions = sqliteTable('sessions', {
   userId: text('userId').notNull().references(() => users.id, { onDelete: 'cascade' }),
 });
 
-// Accounts table (Better Auth)
+// Accounts table (Better Auth) - Updated for Better Auth compatibility
 export const accounts = sqliteTable('accounts', {
   id: text('id').primaryKey(),
   accountId: text('accountId').notNull(),
@@ -38,7 +38,7 @@ export const accounts = sqliteTable('accounts', {
   accessTokenExpiresAt: integer('accessTokenExpiresAt', { mode: 'timestamp' }),
   refreshTokenExpiresAt: integer('refreshTokenExpiresAt', { mode: 'timestamp' }),
   scope: text('scope'),
-  password: text('password'),
+  password: text('password'), // For email/password auth
   createdAt: integer('createdAt', { mode: 'timestamp' }).default(sql`(unixepoch())`),
   updatedAt: integer('updatedAt', { mode: 'timestamp' }).default(sql`(unixepoch())`),
 });

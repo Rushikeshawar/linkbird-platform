@@ -5,6 +5,13 @@ const path = require('path');
 const dbPath = path.join(__dirname, '..', 'local.db');
 console.log('Creating database at:', dbPath);
 
+// Delete existing database to start fresh
+const fs = require('fs');
+if (fs.existsSync(dbPath)) {
+  fs.unlinkSync(dbPath);
+  console.log('Deleted existing database');
+}
+
 const db = new Database(dbPath);
 
 function setupDatabase() {
@@ -15,14 +22,14 @@ function setupDatabase() {
         id TEXT PRIMARY KEY,
         name TEXT NOT NULL,
         email TEXT NOT NULL UNIQUE,
-        emailVerified INTEGER,
+        emailVerified INTEGER DEFAULT 0,
         image TEXT,
         createdAt INTEGER DEFAULT (unixepoch()),
         updatedAt INTEGER DEFAULT (unixepoch())
       );
     `);
 
-    // Create sessions table
+    // Create sessions table - Better Auth compatible
     db.exec(`
       CREATE TABLE IF NOT EXISTS sessions (
         id TEXT PRIMARY KEY,
@@ -37,7 +44,7 @@ function setupDatabase() {
       );
     `);
 
-    // Create accounts table
+    // Create accounts table - Better Auth compatible
     db.exec(`
       CREATE TABLE IF NOT EXISTS accounts (
         id TEXT PRIMARY KEY,
